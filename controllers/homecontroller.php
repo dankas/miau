@@ -12,6 +12,8 @@ function exportJson($nome,$json) {
     $fp = fopen("export/".$nome.".json","wb");
     fwrite($fp,$json);
     fclose($fp);
+    system(('git commit -m "commit automatico"'));
+    system(('git push master master '));
 }
 
 
