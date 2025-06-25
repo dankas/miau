@@ -13,6 +13,30 @@ class Pet {
 
         }
 
+    public function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+    public function setRace($race) {
+        $this->race = $race;
+    }
+
+    public function setTipo($tipo) {
+        $this->tipo = $tipo;
+    }
+
+    public function setTutor($tutor) {
+        $this->tutor = $tutor;
+    }
+
+    public function setBio($bio) {
+        $this->bio = $bio;
+    }
+
+    public function setNascimento($nascimento) {
+        $this->nascimento = $nascimento;
+    }
+
 
 }
 

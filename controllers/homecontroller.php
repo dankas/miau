@@ -3,83 +3,35 @@ session_start();
 require_once 'core/Database.php';
 require_once 'models/user.php';
 require_once 'models/pet.php';
+require_once 'petscontroller.php';
+require_once 'userscontroller.php';
+if ($_SERVER['REQUEST_METHOD'] === 'GET' )  {
+    $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id"));
+    $users = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
+}
 
-$pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id"));
-$users = getUser(1, $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
-exportJson("pets",json_encode($pets));
-exportJson("users",json_encode($users));
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
+    $pet = new Pet;
+    $pet->setNome($_POST['nome']);
+    $pet->setRace($_POST['race']);
+    $pet->setBio($_POST['bio']);
+    $pet->setNascimento($_POST['nascimento']);
+    $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
+    $pet->setTutor( $_SESSION['userId']);
+    addPet($pet,$pdo);
+    header('Location: home.php?section=home');
+
+}
+
 function exportJson($nome,$json) {
     $fp = fopen("export/".$nome.".json","wb");
     fwrite($fp,$json);
     fclose($fp);
-    system(('git add .'));
-    system(('git commit -m "commit automatico"'));
-    system(('git push origin master '));
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
-    $nomepet = $_POST['nome'];
-    $tipopet = ($_POST['tipo'] === 'Gato' ) ? 1 : 2 ;
-    $racepet = $_POST['race'];
-    $nascimentopet = $_POST['nascimento'];
-    $biopet = $_POST['bio'];
-    $userid = 1;
-    echo $userid;
-    echo $nomepet;
-    echo $tipopet;
-    echo $racepet;
-    echo $nascimentopet;
-    echo $biopet;
-    //$data = $pdo->prepare("INSERT INTO pet (nome, race) VALUES ('teste', 'srv');");
-    $data = $pdo->prepare("INSERT INTO pet (nome,race,tipoid,tutor,bio,nascimento) VALUES (:nomepet,:racepet, :tipopet, :userid, :biopet, :nascimentopet)");
-    $data-> bindValue(":nomepet",$nomepet);
-    $data-> bindValue(":tipopet",$tipopet,PDO::PARAM_INT);
-    $data-> bindValue(":racepet",$racepet);
-    $data-> bindValue(":biopet",$biopet);
-    $data-> bindValue(":nascimentopet",$nascimentopet);
-    $data-> bindValue(":userid",$userid,PDO::PARAM_INT);
-    $data-> execute();
-     header('Location: home.php?section=home');
-
+    //system(('git add .'));
+    //system(('git commit -m "commit automatico"'));
+    //system(('git push origin master '));
 }
 
-
-
-
-function listPets($pets) {
-     foreach($pets as $key => $value){
-        echo "<tr>";
-        echo "<td>". $value->nome ." </td>";
-        echo "<td>". $value->tipo ." </td>";
-        echo "<td>". $value->race ." </td>";
-        echo "<td>". $value->nascimento ." </td>";
-        echo "<td>". $value->bio ." </td>";
-        echo "<td> <button> <button> </td>";
-        echo "</tr>";
-     }
-}
-function getUser($idtutor,$data) {
-    try {
-        $data->bindValue(":id",$idtutor);
-        $data->execute();
-        return $data->fetchObject('User');
-    }
-    catch (PDOException $e) {
-        echo "Erro ao buscar dados: " . $e->getMessage();
-    }
-}
-function getPets($idtutor,$data) {
-    try {
-        $data->bindValue(":id",$idtutor);
-        $data->execute();
-        return $data->fetchAll(PDO::FETCH_CLASS,'Pet');
-    }
-    catch (PDOException $e) {
-        echo "Erro ao buscar dados: " . $e->getMessage();
-    }
-}
-function addPet($pet,$data) {
-
-}
 
 
 ?>
