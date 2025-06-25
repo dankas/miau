@@ -14,7 +14,7 @@ function exportJson($nome,$json) {
     fclose($fp);
     system(('git add .'));
     system(('git commit -m "commit automatico"'));
-    system(('git push master master '));
+    system(('git push origin master '));
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
     $nomepet = $_POST['nome'];
