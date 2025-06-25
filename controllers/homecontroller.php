@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
     $data-> bindValue(":nascimentopet",$nascimentopet);
     $data-> bindValue(":userid",$userid,PDO::PARAM_INT);
     $data-> execute();
+     header('Location: home.php?section=home');
 
 }
 
