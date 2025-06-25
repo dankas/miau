@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
     echo $racepet;
     echo $nascimentopet;
     echo $biopet;
-    $data = $pdo->prepare("INSERT INTO meowdb.pet (nome, race, tipoid, tutor, bio, nascimento) VALUES ('teste', 'srv', 2, 1, 'testete', '2025-06-25');");
+    $data = $pdo->prepare("INSERT INTO meowdb.pet (nome, race, tipoid, tutor, bio, nascimento) VALUES ('teste', 'srv', 2, 1, 'testete', '');");
     //$data = $pdo->prepare("INSERT INTO pet (nome,race,tipoid,tutor,bio,nascimento) VALUES (:nomepet,:racepet, :tipopet, :userid, :biopet, :nascimentopet)");
     $data-> bindValue(":nomepet",$nomepet);
     $data-> bindValue(":tipopet",$tipopet);
