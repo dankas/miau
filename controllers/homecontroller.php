@@ -29,14 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
     echo $racepet;
     echo $nascimentopet;
     echo $biopet;
-    $data = $pdo->prepare("INSERT INTO pet (nome, race) VALUES ('teste', 'srv');");
-    //$data = $pdo->prepare("INSERT INTO pet (nome,race,tipoid,tutor,bio,nascimento) VALUES (:nomepet,:racepet, :tipopet, :userid, :biopet, :nascimentopet)");
+    //$data = $pdo->prepare("INSERT INTO pet (nome, race) VALUES ('teste', 'srv');");
+    $data = $pdo->prepare("INSERT INTO pet (nome,race,tipoid,tutor,bio,nascimento) VALUES (:nomepet,:racepet, :tipopet, :userid, :biopet, :nascimentopet)");
     $data-> bindValue(":nomepet",$nomepet);
-    $data-> bindValue(":tipopet",$tipopet);
+    $data-> bindValue(":tipopet",$tipopet,PDO::PARAM_INT);
     $data-> bindValue(":racepet",$racepet);
     $data-> bindValue(":biopet",$biopet);
     $data-> bindValue(":nascimentopet",$nascimentopet);
-    $data-> bindValue(":userid",$userid);
+    $data-> bindValue(":userid",$userid,PDO::PARAM_INT);
     $data-> execute();
 
 }
