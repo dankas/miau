@@ -12,9 +12,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <form method="POST">
+                    <form method="POST" action="home.php?section=addpet">
                         <td>
-                            <input type="text" name="username" id="username" required ">
+                            <input type="text" name="nome" id="nome" required ">
                         </td>
                         <td>
                             <select name="tipo" id="tipo" required>
@@ -25,13 +25,13 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="username" id="username" required>
+                            <input type="text" name="race" id="race" required>
                         </td>
                         <td> 
-                            <input type="date" name="username" id="username" required>
+                            <input type="date" name="nascimento" id="nascimento" required>
                         </td>
                         <td> 
-                            <input type="text" name="username" id="username" required>
+                            <input type="text" name="bio" id="bio" required>
                         </td>
                         <td> 
                             <button type="submit">Adicionar</button>

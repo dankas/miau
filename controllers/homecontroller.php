@@ -12,10 +12,33 @@ function exportJson($nome,$json) {
     $fp = fopen("export/".$nome.".json","wb");
     fwrite($fp,$json);
     fclose($fp);
-    //system(('git commit -m "commit automatico"'));
-    //system(('git push master master '));
+    system(('git add .'));
+    system(('git commit -m "commit automatico"'));
+    system(('git push master master '));
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
+    $nomepet = $_POST['nome'];
+    $tipopet = ($_POST['tipo'] === 'Gato' ) ? 1 : 2 ;
+    $racepet = $_POST['race'];
+    $nascimentopet = $_POST['nascimento'];
+    $biopet = $_POST['bio'];
+    $userid = 1;
+    echo $userid;
+    echo $nomepet;
+    echo $tipopet;
+    echo $racepet;
+    echo $nascimentopet;
+    echo $biopet;
+    $data = $pdo->prepare("INSERT INTO pet (nome,tipoid,tutor,race,bio,nascimento) VALUES (:nomepet, :tipopet, :userid, :racepet, :biopet, :nascimentopet");
+    $data-> bindValue(":nomepet",$nomepet);
+    $data-> bindValue(":tipopet",$tipopet);
+    $data-> bindValue(":racepet",$racepet);
+    $data-> bindValue(":biopet",$biopet);
+    $data-> bindValue(":nascimentopet",$nascimentopet);
+    $data-> bindValue(":userid",$userid);
+    $data-> execute();
 
+}
 
 
 
@@ -52,4 +75,9 @@ function getPets($idtutor,$data) {
         echo "Erro ao buscar dados: " . $e->getMessage();
     }
 }
+function addPet($pet,$data) {
+
+}
+
+
 ?>
