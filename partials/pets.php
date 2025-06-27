@@ -12,9 +12,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <form method="POST" action="home.php?section=addpet">
+                    <form method="POST" action="home.php?action=addpet">
                         <td>
-                            <input type="text" name="nome" id="nome" required ">
+                            <input type="text" name="nome" id="nome" required >
                         </td>
                         <td>
                             <select name="tipo" id="tipo" required>

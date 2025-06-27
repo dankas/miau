@@ -5,12 +5,13 @@ require_once 'models/user.php';
 require_once 'models/pet.php';
 require_once 'petscontroller.php';
 require_once 'userscontroller.php';
+ $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id"));
+$users = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET' )  {
-    $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id"));
-    $users = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
     $pet = new Pet;
     $pet->setNome($_POST['nome']);
     $pet->setRace($_POST['race']);
@@ -20,6 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['section'] == 'addpet') {
     $pet->setTutor( $_SESSION['userId']);
     addPet($pet,$pdo);
     header('Location: home.php?section=home');
+    exit();
+
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'deletePet') {
+    
+    deletePet($_POST['idpet'],$pdo);
+    header('Location: home.php');
+    exit();
 
 }
 

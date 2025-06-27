@@ -2,6 +2,7 @@
 
 
 class Pet {
+    public $idpet;
     public $nome;
     public $race;
     public $tipo;
@@ -12,6 +13,9 @@ class Pet {
     public function __construct()        {
 
         }
+    public function setId($id) {
+        $this->idpet = $id;
+    }
 
     public function setNome($nome) {
         $this->nome = $nome;

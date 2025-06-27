@@ -50,7 +50,7 @@ require_once 'controllers/homecontroller.php';
     </style>
 </head>
 <body>
-    <?php include 'partials/sidebar.php';?>
+    <?php  include 'partials/sidebar.php';?>
     <div class="main-content">
         <h1>Bem-vindo, <?php echo $users->username; ?></h1>
         <?php
