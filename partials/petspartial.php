@@ -31,8 +31,7 @@
                             <input type="date" name="nascimento" id="nascimento" required>
                         </td>
                         <td> 
-                            <input type="text" name="bio" id="bio" required>
-                        </td>
+                            <textarea name="bio" id="bio" required rows="5" cols="30"></textarea>        </td>
                         <td> 
                             <button type="submit">Adicionar</button>
                         </td>

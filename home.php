@@ -50,7 +50,7 @@ require_once 'controllers/homecontroller.php';
     </style>
 </head>
 <body>
-    <?php  include 'partials/sidebar.php';?>
+    <?php  include 'partials/sidebarpartial.php';?>
     <div class="main-content">
         <h1>Bem-vindo, <?php echo $users->username; ?></h1>
         <?php
@@ -58,13 +58,13 @@ require_once 'controllers/homecontroller.php';
 
         switch ($section) {
             case 'perfil':
-                include 'partials/perfil.php';
+                include 'partials/perfilpartial.php';
                 break;
             case 'consultas':
-                include 'partials/consultas.php';
+                include 'partials/consultaspartial.php';
                 break;
             default:
-                include 'partials/pets.php';
+                include 'partials/petspartial.php';
                 break;
         }
         ?>
