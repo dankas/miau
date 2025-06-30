@@ -9,12 +9,13 @@ $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo
 $users = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
+    $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';
     exportJson("pets", json_encode($pets));
     exportJson("users", json_encode($users));
     system(('git add .'));
-    system(('git commit -m "commit ExportJson"'.date('Y-m-d H:i:s').''));
+    system('git commit -m "' . $commitMessage . '"');
     system(('git push origin master '));
-    header('Location: home.php?section=home&message=Dados exportados com sucesso');
+    header('Location: home.php?section=home&message=Dados exportados com sucesso ' . $commitMMessage);
 
 }
 

@@ -53,7 +53,7 @@ require_once 'controllers/homecontroller.php';
     <?php  include 'partials/sidebarpartial.php';?>
     <div class="main-content">
             <?php if (isset($_GET['message'])): ?>
-                <div class="alert" style="background: #4CAF50; color: white; padding: 15px; border-radius: 5px;">
+                <div href="home.php" class="alert" style="background: #4CAF50; color: white; padding: 15px; border-radius: 5px;">
                 <p><?php echo $_GET['message']; ?></p>
                 </div>
             <?php endif; ?>
