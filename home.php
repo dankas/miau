@@ -53,6 +53,11 @@ require_once 'controllers/homecontroller.php';
     <?php  include 'partials/sidebarpartial.php';?>
     <div class="main-content">
         <h1>Bem-vindo, <?php echo $users->username; ?></h1>
+        <div style="text-align: right;">
+            <form action="home.php?action=exportJson" method="post" style="display: inline;">
+            <button type="submit">Exportar Dados</button>
+            </form>
+        </div>
         <?php
         $section = isset($_GET['section']) ? $_GET['section'] : '';
 
