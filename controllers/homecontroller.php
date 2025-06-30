@@ -11,7 +11,7 @@ $user = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE id
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
     $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';
     exportJson("pets", json_encode($pets));
-    exportJson("users", json_encode($users));
+    exportJson("user", json_encode($user));
     $gitaddMessage = system(('git add .'));
     $gitcommitMessage = system('git commit -m "' . $commitMessage . '"');
     $gitpushMessage = system(('git push origin master '));
