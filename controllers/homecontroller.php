@@ -8,7 +8,14 @@ require_once 'userscontroller.php';
 $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id AND ativo = 1 ORDER BY datetimeregistro"));
 $users = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' )  {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
+    exportJson("pets", json_encode($pets));
+    exportJson("users", json_encode($users));
+    system(('git add .'));
+    system(('git commit -m "commit ExportJson"'.date('Y-m-d H:i:s').''));
+    system(('git push origin master '));
+
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
@@ -61,9 +68,6 @@ function exportJson($nome,$json) {
     $fp = fopen("export/".$nome.".json","wb");
     fwrite($fp,$json);
     fclose($fp);
-    //system(('git add .'));
-    //system(('git commit -m "commit automatico"'));
-    //system(('git push origin master '));
 }
 
 
