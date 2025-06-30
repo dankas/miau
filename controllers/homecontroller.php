@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  
     system(('git add .'));
     system(('git commit -m "commit ExportJson"'.date('Y-m-d H:i:s').''));
     system(('git push origin master '));
-
+    header('Location: home.php?section=home&message=Dados exportados com sucesso');
 
 }
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
     $pet->setTutor( $_SESSION['userId']);
     array_push($pets, $pet);
     addPet($pet,$pdo);
-    header('Location: home.php?section=home');
+    header('Location: home.php?section=home&message=Pet adicionado com sucesso');
     exit();
 
 }
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
     updatePet($pet,$pdo);
-    header('Location: home.php?section=home');
+    header('Location: home.php?section=home&message=Pet atualizado com sucesso');
     exit();
 
 }

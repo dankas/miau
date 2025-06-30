@@ -52,6 +52,12 @@ require_once 'controllers/homecontroller.php';
 <body>
     <?php  include 'partials/sidebarpartial.php';?>
     <div class="main-content">
+            <?php if (isset($_GET['message'])): ?>
+                <div class="alert" style="background: #4CAF50; color: white; padding: 15px; border-radius: 5px;">
+                <p><?php echo $_GET['message']; ?></p>
+                </div>
+            <?php endif; ?>
+        
         <h1>Bem-vindo, <?php echo $users->username; ?></h1>
         <div style="text-align: right;">
             <form action="home.php?action=exportJson" method="post" style="display: inline;">
