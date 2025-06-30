@@ -53,15 +53,20 @@ require_once 'controllers/homecontroller.php';
     <?php  include 'partials/sidebarpartial.php';?>
     <div class="main-content">
             <?php if (isset($_GET['message'])): ?>
-                <div href="home.php" class="alert" style="background: #4CAF50; color: white; padding: 15px; border-radius: 5px;">
-                <p><?php echo $_GET['message']; ?></p>
+                <div class="alert" style="background:rgb(56, 179, 107); color: white; padding: 15px; border-radius: 5px;margin-top: 15px;margin-bottom: 15px;">
+                <p style="text-align: right;"> <a href="home.php" style="background: white; padding: 5px ; color: white; text-decoration: none;">❌</a></p>
+                <p><strong><?php echo $_GET['message']; ?></strong></p>
                 </div>
             <?php endif; ?>
-        
-        <h1>Bem-vindo, <?php echo $users->username; ?></h1>
-        <div style="text-align: right;">
+        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <img src="assets/imgs/<?php echo $user->imgprofile; ?>" alt="Imagem de perfil" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+            <h1 style="margin: 0;">Bem-vindo, <?php echo $user->username; ?></h1>
+            <p><strong style="margin: 5px;"> (Telefone: <?php echo $user->telefone; ?>)</strong></p>
+        </div>
+
+        <div style="text-align: right; margin-bottom: 20px;">
             <form action="home.php?action=exportJson" method="post" style="display: inline;">
-            <button type="submit">Exportar Dados</button>
+            <button type="submit">Exportar Dados ⤴️</button>
             </form>
         </div>
         <?php
