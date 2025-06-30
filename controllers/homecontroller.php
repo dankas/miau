@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  
     $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';
     exportJson("pets", json_encode($pets));
     exportJson("users", json_encode($users));
-    system(('git add .'));
-    system('git commit -m "' . $commitMessage . '"');
-    system(('git push origin master '));
-    header('Location: home.php?section=home&message=Dados exportados com sucesso ' . $commitMMessage);
+    $gitaddMessage = system(('git add .'));
+    $gitcommitMessage = system('git commit -m "' . $commitMessage . '"');
+    $gitpushMessage = system(('git push origin master '));
+    header('Location: home.php?section=home&message=Dados exportados com sucesso ' . $commitMessage. ' ' . $gitaddMessage . ' ' . $gitcommitMessage . ' ' . $gitpushMessage);
 
 }
 
