@@ -6,6 +6,7 @@
                     <th>Tipo</th>
                     <th>Raça</th>
                     <th>Data nascimento</th>
+                    <th>Imagem de perfil</th>
                     <th>Bio</th>
                     <th></th>
                 </tr>
@@ -29,6 +30,9 @@
                         </td>
                         <td> 
                             <input type="date" name="nascimento" id="nascimento" required>
+                        </td>
+                        <td>
+                            <input type="text" name="img-perfil" id="img-perfil" value="">
                         </td>
                         <td> 
                             <textarea name="bio" id="bio" required rows="5" cols="30"></textarea>        </td>

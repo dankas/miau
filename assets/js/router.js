@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.innerHTML = `
             <h2>${pet.nome}</h2>
             <p><strong>Raça:</strong> ${pet.race}</p>
-            <p><strong>Idade:</strong> ${pet.idade} anos</p>
+            <p><strong>Idade:</strong> ${new Date().getFullYear() - new Date(pet.nascimento).getFullYear()} anos</p>
             <p>${pet.bio}</p>
         `;
     }
