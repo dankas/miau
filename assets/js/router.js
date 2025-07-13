@@ -25,7 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             const a = document.createElement('a');
             a.href = `#${pet.nome.toLowerCase()}`; // Create a hash-based route
-            a.textContent = pet.nome;
+
+            // Create image element
+            const img = document.createElement('img');
+            img.src = 'assets/imgs/uploads/' + pet.img-perfil; // Assuming each pet object has an img_profile property
+            img.alt = pet.nome;
+            img.style.width = '50px'; // Adjust size as needed
+            img.style.height = '50px';
+            img.style.borderRadius = '50%'; // Make it circular
+
+
+            a.appendChild(img); // Append image to the anchor
+
             a.addEventListener('click', (event) => {
                 event.preventDefault(); // Prevent default anchor behavior
                 displayPetInfo(pet);

@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
     $pet->setNascimento($_POST['nascimento']);
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
+    $pet->setImgperfil($_POST['img-perfil']);
     array_push($pets, $pet);
     addPet($pet,$pdo);
     header('Location: home.php?section=home&message=Pet adicionado com sucesso');
@@ -53,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
     $pet->setNascimento($_POST['nascimento']);
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
+    $pet->setImgperfil($_POST['imgperfil']);
     updatePet($pet,$pdo);
     header('Location: home.php?section=home&message=Pet atualizado com sucesso');
     exit();

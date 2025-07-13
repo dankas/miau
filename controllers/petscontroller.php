@@ -11,7 +11,7 @@ function listPets($pets) {
               </select>";
         echo "<td><input type='text' name='race' value='" . $value->race . "'></td>";
         echo "<td><input type='date' name='nascimento' value='" . $value->nascimento . "'></td>";
-        echo "<td><input type='text' name='img-perfil' value='" . $value->{'img-perfil'} . "'></td>";
+        echo "<td><input type='text' name='imgperfil' value='" . $value->imgperfil . "'></td>";
         echo "<td><textarea rows='5' cols='30' name='bio'>" . $value->bio . "</textarea></td>";
         echo "<td>
             <button type='submit'>Salvar</button>
