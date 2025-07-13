@@ -4,79 +4,96 @@
     <meta charset="UTF-8">
     <title>Miau - Página Inicial</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f8f8f8;
-        }
-        header {
-            background: #4a90e2;
-            padding: 0 16px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            height: 56px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .logo {
-            font-size: 1.2em;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        nav {
-            margin-left: auto;
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 12px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.95em;
-            transition: color 0.2s;
-            padding: 8px 6px;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            color: #d0e6fa;
-            background: rgba(255,255,255,0.08);
-        }
-
-        /* Desktop adjustments */
-        @media (min-width: 600px) {
-            header {
-                padding: 0 24px;
-                height: 64px;
-            }
-            .logo {
-                font-size: 1.5em;
-            }
-            nav ul {
-                gap: 24px;
-            }
-            nav a {
-                font-size: 1em;
-                padding: 10px 12px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/front_style.css">
 </head>
 <body>
+    
     <header>
-        <div class="logo">Miau</div>
+        <a href="index.html" class="user-profile">
+            <img class="user-img" src="assets/imgs/profiles/users.png" alt="Mi-Au">
+        </a>
         <nav>
-            <ul>
-                <li><a href="#perfil">Perfil</a></li>
-                <li><a href="#consultas">Consultas</a></li>
-                <li><a href="#vacina">Vacina</a></li>
-                <li><a href="#fotos">Fotos</a></li>
-            </ul>
-        </nav>
+
     </header>
+    <main>
+        <h1>Bem-vindo ao Miau!</h1>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+                <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+        <p>Esta é a página inicial do Miau, um sistema de gerenciamento para clínicas veterinárias.</p>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <div id="user-info">
+
+            </div>
+            <div class="footer-info">
+                <img class="logo-img" src="assets/imgs/logos/logo.jpeg" alt="Mi-Au">
+            </div>
+        </div>
+
+    </footer>
 </body>
 </html>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('./export/user.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na rede ao buscar user.json: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(user => {
+            const userInfoElement = document.getElementById('user-info');
+            if (userInfoElement) {
+                
+                userInfoElement.textContent = `Usuário: ${user.username} | Telefone: ${user.telefone}`;
+                userInfoElement.style.display = 'block';
+                const userImg = document.createElement('img');
+                userImg.className = 'user-img';
+                userImg.src = 'assets/imgs/profiles/users.png';
+                userImg.alt = 'Mi-Au';
+                userInfoElement.appendChild(userImg);
+                
+            }
+        })
+        .catch(error => {
+            console.error('Falha ao buscar ou processar os dados do usuário:', error);
+            const userInfoElement = document.getElementById('user-info');
+            if (userInfoElement) {
+                userInfoElement.textContent = 'Não foi possível carregar as informações do usuário.';
+            }
+        });
+});
+</script>
