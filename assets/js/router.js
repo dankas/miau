@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to render navigation links
+    
     function renderNavigation(pets) {
-        petNav.innerHTML = ''; // Clear existing nav
+        petNav.innerHTML = ''; // limpa a navegação existente
         const ul = document.createElement('ul');
         pets.forEach(pet => {
             const li = document.createElement('li');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             a.appendChild(img);
 
             a.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default anchor behavior
+                event.preventDefault(); // previne o comportamento padrão do link
                 displayPetInfo(pet);
             });
             li.appendChild(a);
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         petNav.appendChild(ul);
     }
 
-    // Function to display pet information
+    // mostra informações do pet
     function displayPetInfo(pet) {
         mainContent.innerHTML = `
             <h2>${pet.nome}</h2>
