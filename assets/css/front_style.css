@@ -19,10 +19,6 @@
             top: 0;
 
         }
-        .logo {
-
-
-        }
         .user-img {
             height: 56px;
             margin: 1px;
@@ -45,6 +41,10 @@
 
         nav {
             margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
         }
         nav ul {
             list-style: none;
@@ -64,6 +64,12 @@
         nav a:hover {
             color: #d0e6fa;
             background: rgba(255,255,255,0.08);
+        }
+        .pet-navimg {
+                width: 36px;
+                height: 36px;
+                margin: 1px;
+                border-radius: 50%;
         }
 
         /* Desktop adjustments */
@@ -94,4 +100,10 @@
                 font-size: 1em;
                 padding: 10px 12px;
             }
+            .pet-navimg{
+                width: 128px;
+                height: 128px;
+                margin: 1px;
+                border-radius: 50%;
+            }   
         }

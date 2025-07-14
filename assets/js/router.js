@@ -24,18 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
         pets.forEach(pet => {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.href = `#${pet.nome.toLowerCase()}`; // Create a hash-based route
+            a.href = `#${pet.nome.toLowerCase()}`;
 
-            // Create image element
+            
             const img = document.createElement('img');
-            img.src = 'assets/imgs/uploads/' + pet.img-perfil; // Assuming each pet object has an img_profile property
+            img.src = 'assets/imgs/uploads/' + pet.imgperfil; 
             img.alt = pet.nome;
-            img.style.width = '50px'; // Adjust size as needed
-            img.style.height = '50px';
-            img.style.borderRadius = '50%'; // Make it circular
+            img.className = 'pet-navimg';
 
-
-            a.appendChild(img); // Append image to the anchor
+            a.appendChild(img);
 
             a.addEventListener('click', (event) => {
                 event.preventDefault(); // Prevent default anchor behavior
@@ -53,10 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <h2>${pet.nome}</h2>
             <p><strong>Raça:</strong> ${pet.race}</p>
             <p><strong>Idade:</strong> ${new Date().getFullYear() - new Date(pet.nascimento).getFullYear()} anos</p>
+            <p><strong>Aniversário:</strong> ${pet.nascimento}</p>
+            <p><strong>Tipo:</strong> ${pet.tipo}</p>
+
             <p>${pet.bio}</p>
         `;
     }
 
     // Initialize the application
-    fetchPets().then(pets => renderNavigation(pets));
+    fetchPets().then(pets => {
+        renderNavigation(pets);
+        
+    });
+
 });
+
+
