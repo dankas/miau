@@ -20,10 +20,11 @@ if(isset($_SESSION['isLogged'] )) {
 
 <body>
     <div class="login-container">
+        <img class="logo-img" src="assets/imgs/logos/logo.jpeg" alt="Logo">
         <h2>Login</h2>
         <form method="POST">
             <label for="username">Usuário:</label>
-            <input type="text" name="username" id="username" required>
+            <input timgype="text" name="username" id="username" required>
             <br>
             <label for="password">Senha:</label>
             <input type="password" name="password" id="password" required>
@@ -32,6 +33,12 @@ if(isset($_SESSION['isLogged'] )) {
         </form>
     </div>
     <style>
+        .logo-img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 5px;
+        }
+
         body {
             min-height: 100vh;
             display: flex;
@@ -56,6 +63,8 @@ if(isset($_SESSION['isLogged'] )) {
         .login-container label {
             color: var(--primary, #2c3e50);
             margin-top: 0.5rem;
+            text-align: left;
+            display: block;
         }
         .login-container input {
             width: 220px;

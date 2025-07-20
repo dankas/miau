@@ -1,23 +1,26 @@
 <?php
 function listPets($pets) {
-     foreach($pets as $key => $value){
+     foreach($pets as $key => $pet){
         echo "<tr>";
-        echo "<form method='POST' action='home.php?action=updatePet'>";
-        echo "<input type='hidden' name='idpet' value='" . $value->idpet . "'>";
-        echo "<td><input type='text' name='nome' value='" . $value->nome . "'></td>";
+        echo "<form method='POST' enctype='multipart/form-data' action='home.php?action=updatePet'>";
+        echo "<input type='hidden' name='idpet' value='" . $pet->idpet . "'>";
+        echo "<td><input type='text' name='nome' value='" . $pet->nome . "'></td>";
         echo "<td><select name='tipo' id='tipo' required>
-                    <option value='Cachorro' " . ($value->tipo =='cão' ? "selected" : "") . ">Cachorro</option>
-                    <option value='Gato' " . ($value->tipo == 'gato' ? "selected" : "") . ">Gato</option>
+                    <option value='Cachorro' " . ($pet->tipo =='cão' ? "selected" : "") . ">Cachorro</option>
+                    <option value='Gato' " . ($pet->tipo == 'gato' ? "selected" : "") . ">Gato</option>
               </select>";
-        echo "<td><input type='text' name='race' value='" . $value->race . "'></td>";
-        echo "<td><input type='date' name='nascimento' value='" . $value->nascimento . "'></td>";
-        echo "<td><input type='text' name='imgperfil' value='" . $value->imgperfil . "'></td>";
-        echo "<td><textarea rows='5' cols='30' name='bio'>" . $value->bio . "</textarea></td>";
+        echo "<td><input type='text' name='race' value='" . $pet->race . "'></td>";
+        echo "<td><input type='date' name='nascimento' value='" . $pet->nascimento . "'></td>";
+        echo "<td>
+            <img src='assets/imgs/uploads/" . $pet->imgperfil . "' alt='Imagem de Perfil' style='display:block; width: 50px; height: 50px; object-fit: cover;'>
+            <input type='file' name='img_upload' accept='image/*'>
+            <input type='hidden' name='existing_imgperfil' value='" . $pet->imgperfil . "'></td>";
+        echo "<td><textarea rows='5' cols='30' name='bio'>" . $pet->bio . "</textarea></td>";
         echo "<td>
             <button type='submit'>Salvar</button>
               </form>
               <form method='POST' action='home.php?action=deletePet' style='display:inline;'>
-            <input type='hidden' name='idpet' value='" . $value->idpet . "'>
+            <input type='hidden' name='idpet' value='" . $pet->idpet . "'>
             <button type='submit'>Excluir</button>
               </form>
               </td>";

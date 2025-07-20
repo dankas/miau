@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <form method="POST" action="home.php?action=addpet">
+                    <form method="POST" enctype='multipart/form-data' action="home.php?action=addpet">
                         <td>
                             <input type="text" name="nome" id="nome" required >
                         </td>
@@ -32,8 +32,8 @@
                             <input type="date" name="nascimento" id="nascimento" required>
                         </td>
                         <td>
-                            <input type="text" name="img-perfil" id="img-perfil" value="">
-                        </td>
+                        <input type='file' name='img_upload' accept='image/*'>
+                         </td>
                         <td> 
                             <textarea name="bio" id="bio" required rows="5" cols="30"></textarea>        </td>
                         <td> 

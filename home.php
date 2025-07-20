@@ -59,7 +59,7 @@ require_once 'controllers/homecontroller.php';
                 </div>
             <?php endif; ?>
         <div style="display: flex; align-items: center; margin-bottom: 20px;">
-            <img src="assets/imgs/<?php echo $user->imgprofile; ?>" alt="Imagem de perfil" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+            <img src="assets/imgs/profiles/<?php echo $user->imgprofile; ?>" alt="Imagem de perfil" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
             <h1 style="margin: 0;">Bem-vindo, <?php echo $user->username; ?></h1>
             <p><strong style="margin: 5px;"> (Telefone: <?php echo $user->telefone; ?>)</strong></p>
         </div>

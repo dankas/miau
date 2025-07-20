@@ -1,21 +1,27 @@
 <?php
 session_start();
 require_once 'core/Database.php';
+require_once 'core/uploads.php';
 require_once 'models/user.php';
 require_once 'models/pet.php';
+require_once 'models/consulta.php';
 require_once 'petscontroller.php';
 require_once 'userscontroller.php';
+require_once 'consultascontroller.php';
+
 $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id AND ativo = 1 ORDER BY datetimeregistro"));
 $user = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
+$consultas = getConsultas( $pdo->prepare("SELECT * FROM consulta"));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
     $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';
     exportJson("pets", json_encode($pets));
     exportJson("user", json_encode($user));
     //$gitaddMessage = system(('git add .'));
-    //$gitcommitMessage = system('git commit -m "' . $commitMessage . '"');
-   // $gitpushMessage = system(('git push origin master '));
-    header('Location: home.php?section=home&message=Dados exportados com sucesso ' . $commitMessage. ' ' . $gitaddMessage . ' ' . $gitcommitMessage . ' ' . $gitpushMessage);
+    //$gitcommitMessage = system('git commit -m "' . $commitMessage . '"'); // This line was commented out
+    //$gitpushMessage = system('git push origin master '); // This line was commented out
+    header('Location: home.php?section=home&message=Dados exportados com sucesso ' . $commitMessage . ' ' . $gitaddMessage . ' ' . $gitcommitMessage . ' ' . $gitpushMessage . ' ');
+    exit();
 
 }
 
@@ -38,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
     $pet->setImgperfil($_POST['img-perfil']);
+    $novaImgPerfil = uploadImage($_FILES['img_upload'], NULL);
+    $pet->setImgperfil($novaImgPerfil);
     array_push($pets, $pet);
     addPet($pet,$pdo);
     header('Location: home.php?section=home&message=Pet adicionado com sucesso');
@@ -46,17 +54,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
-
     $pet = array_find($pets, fn($p) => $p->idpet == $_POST['idpet']);
+    $novaImgPerfil = uploadImage($_FILES['imgp_upload'], NULL);
+    if ($novaImgPerfil) {
+        $pet->setImgperfil($novaImgPerfil);
+    } else if ($_POST['existing_imgperfil']) {
+        $pet->setImgperfil($_POST['existing_imgperfil']);
+    };
     $pet->setNome($_POST['nome']);
     $pet->setRace($_POST['race']);
     $pet->setBio($_POST['bio']);
     $pet->setNascimento($_POST['nascimento']);
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
-    $pet->setImgperfil($_POST['imgperfil']);
     updatePet($pet,$pdo);
-    header('Location: home.php?section=home&message=Pet atualizado com sucesso');
+    header('Location: home.php?section=home&message=Pet atualizado com sucesso '.$novaImgPerfil. ' ');
     exit();
 
 }
