@@ -20,7 +20,7 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
             position: fixed;
             top: 0;
             left: 0;
-            background: #222;
+            background: #f0940e;
             color: #fff;
             padding-top: 30px;
         }
@@ -35,7 +35,7 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
         }
         .sidebar ul li {
             padding: 15px 20px;
-            border-bottom: 1px solid #333;
+            border-bottom: 0px solid #333;
         }
         .sidebar ul li a {
             color: #fff;
@@ -43,7 +43,7 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
             display: block;
         }
         .sidebar ul li a:hover {
-            background: #444;
+            background: #014880ff;
         }
         .main-content {
             margin-left: 220px;

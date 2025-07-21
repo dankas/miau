@@ -6,8 +6,8 @@ function listPets($pets) {
         echo "<input type='hidden' name='idpet' value='" . $pet->idpet . "'>";
         echo "<td><input type='text' name='nome' value='" . $pet->nome . "'></td>";
         echo "<td><select name='tipo' id='tipo' required>
-                    <option value='Cachorro' " . ($pet->tipo =='cão' ? "selected" : "") . ">Cachorro</option>
-                    <option value='Gato' " . ($pet->tipo == 'gato' ? "selected" : "") . ">Gato</option>
+                    <option value='Cachorro' " . ($pet->tipo == 2 ? "selected" : "") . ">Cachorro</option>
+                    <option value='Gato' " . ($pet->tipo == 1 ? "selected" : "") . ">Gato</option>
               </select>";
         echo "<td><input type='text' name='race' value='" . $pet->race . "'></td>";
         echo "<td><input type='date' name='nascimento' value='" . $pet->nascimento . "'></td>";

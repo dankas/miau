@@ -1,5 +1,5 @@
         <h2>Pets cadastrados: </h2>
-        <table border="1" cellpadding="8" cellspacing="0" style="background:#fff; border-collapse:collapse; width:100%;">
+        <table border="1" cellpadding="8" cellspacing="0" style=" background:#fff;; border-collapse:collapse; width:100%;">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -20,9 +20,9 @@
                         <td>
                             <select name="tipo" id="tipo" required>
                                 <option value="">Selecione</option>
-                                <option value="Cachorro">Cão</option>
-                                <option value="Gato">Gato</option>
-                                
+                                <option value=2>Cão</option>
+                                <option value=1>Gato</option>
+
                             </select>
                         </td>
                         <td>

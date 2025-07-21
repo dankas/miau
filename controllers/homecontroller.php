@@ -11,7 +11,7 @@ require_once 'consultascontroller.php';
 
 $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id AND ativo = 1 ORDER BY datetimeregistro"));
 $user = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
-$consultas = getConsultas( $pdo->prepare("SELECT * FROM consulta WHERE ativo = 1 ORDER BY datetimeregistro"));
+$consultas = getConsultas( $pdo->prepare("SELECT * FROM consulta JOIN tipo_consulta ON consulta.tipoconsultaid = tipo_consulta.idtipoconsulta WHERE ativo = 1 ORDER BY datetimeregistro"));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
     $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';

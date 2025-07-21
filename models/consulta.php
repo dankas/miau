@@ -8,6 +8,7 @@ class Consulta {
     public $img;
     public $ativo;
     public $datetimeregistro;
+    public $tipoconsultaid;
 
     public function __construct()        {
 
@@ -55,13 +56,14 @@ class Consulta {
             case !isset($existe):
                 // Inserir nova consulta
                 try {
-                    $data = $pdo->prepare("INSERT INTO consulta (nomevet,descricao,pet,dataconsulta,ativo,img) VALUES (:nomevet,:descricao,:pet,:dataconsulta,:ativo,:img)");
+                    $data = $pdo->prepare("INSERT INTO consulta (nomevet,descricao,pet,dataconsulta,ativo,img,tipoconsultaid) VALUES (:nomevet,:descricao,:pet,:dataconsulta,:ativo,:img,:tipoconsultaid)");
                     $data->bindValue(":nomevet", $this->nomevet);
                     $data->bindValue(":descricao", $this->descricao);
                     $data->bindValue(":pet", $this->pet);
                     $data->bindValue(":dataconsulta", $this->dataconsulta);
                     $data->bindValue(":ativo", $this->ativo, PDO::PARAM_INT);
                     $data->bindValue(":img", $this->img);
+                    $data->bindValue(":tipoconsultaid", $this->tipoconsultaid, PDO::PARAM_INT);
                     $data->execute();
                     $this->idconsulta = $pdo->lastInsertId();
                 } catch (PDOException $e) {
@@ -72,7 +74,7 @@ class Consulta {
             case (isset($existe) && $this->ativo):
                 // Atualizar consulta existente
                 try {
-                    $data = $pdo->prepare("UPDATE consulta SET nomevet = :nomevet, descricao = :descricao, pet = :pet, dataconsulta = :dataconsulta, ativo = :ativo, img = :img WHERE idconsulta = :idconsulta");
+                    $data = $pdo->prepare("UPDATE consulta SET nomevet = :nomevet, descricao = :descricao,tipoconsultaid = :tipoconsultaid, pet = :pet, dataconsulta = :dataconsulta, ativo = :ativo, img = :img WHERE idconsulta = :idconsulta");
                     $data->bindValue(":nomevet", $this->nomevet);
                     $data->bindValue(":descricao", $this->descricao);
                     $data->bindValue(":pet", $this->pet);
@@ -80,6 +82,7 @@ class Consulta {
                     $data->bindValue(":ativo", $this->ativo, PDO::PARAM_INT);
                     $data->bindValue(":img", $this->img);
                     $data->bindValue(":idconsulta", $this->idconsulta, PDO::PARAM_INT);
+                    $data->bindValue(":tipoconsultaid", $this->tipoconsultaid  , PDO::PARAM_INT);
 
                     $data->execute();
 

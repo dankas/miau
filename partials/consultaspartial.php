@@ -6,6 +6,7 @@
                                 <th>Veterinario</th>
                                 <th>Imagem Receita</th>
                                 <th>Data da consulta</th>
+                                <th>Tipo de Consulta </th>
                                 <th>Descrição</th>
                                 <th></th>
                         </tr>
@@ -35,6 +36,14 @@
                                                 <input type="date" name="dataconsulta" id="dataconsulta" required>
                                         </td>
                                         <td>
+                                                <select name="tipo" id="tipo" required>
+                                                        <option value="">Selecione</option>
+                                                        <option value=1>Atendimento</option>
+                                                        <option value=2>Vacina</option>
+
+                                                </select>
+                                        </td>
+                                        <td>
                                                 <textarea name="descricao" id="descricao" required rows="5" cols="30"></textarea>
                                         </td>
                                         <td>
@@ -42,6 +51,7 @@
                                         </td>
                                 </form>
                         </tr>
+                        
                         <?php listConsultas($consultas, $pets); ?>
                 </tbody>
         </table>

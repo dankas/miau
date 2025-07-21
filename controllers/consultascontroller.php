@@ -12,6 +12,10 @@ function listConsultas($consultas,$pets) {
             <input type='hidden' name='existing_imgconsulta' value='" . $consulta->img . "'>
         </td>";
         echo "<td><input type='date' name='dataconsulta' value='" . $consulta->dataconsulta . "'></td>";
+        echo "<td><select name='tipo' id='tipo' required>
+                    <option value='1' " . ($consulta->tipoconsultaid == 1 ? "selected" : "") . ">Atendimento</option>
+                    <option value='2' " . ($consulta->tipoconsultaid == 2 ? "selected" : "") . ">Vacina</option>
+              </select>";
         echo "<td><textarea rows='5' cols='30' name='descricao'>" . $consulta->descricao . "</textarea></td>";
         echo "<td>
             <button type='submit'>Salvar</button>
