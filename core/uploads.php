@@ -5,19 +5,21 @@ function uploadImage($file, $petName = null) {
     $fileName = basename($file["name"]);
     $targetFilePath = $targetDir . $fileName;
     $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-   // // Allow certain image formats
+
+    // Allow certain image formats
     $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
     if (in_array($fileType, $allowTypes)) {
         // Upload file to server
         move_uploaded_file($file["tmp_name"], $targetFilePath);
         if (($petName !== null)) {
             addWatermark($targetFilePath, $petName, $fileType);
+            }
             return $fileName;
         } 
     else {
             return false;
         }
-    }
+    
 }
 
 function addWatermark($imagePath, $text, $fileType) {
@@ -32,7 +34,7 @@ function addWatermark($imagePath, $text, $fileType) {
     }
 
     $textColor = imagecolorallocate($image, 255, 255, 255); // White color
-    $font = __DIR__ . '/arial.ttf'; // Path to a TrueType font file
+    $font ='assets/fonts/arial.ttf'; // Path to a TrueType font file
     imagettftext($image, 20, 0, 10, $height - 20, $textColor, $font, $text);
 
     imagejpeg($image, $imagePath, 90); // Save the watermarked image

@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
     $pet = array_find($pets, fn($p) => $p->idpet == $_POST['idpet']);
-    $novaImgPerfil = uploadImage($_FILES['imgp_upload'], NULL);
+    $novaImgPerfil = uploadImage($_FILES['img_upload'], NULL);
     if ($novaImgPerfil) {
         $pet->setImgperfil($novaImgPerfil);
     } else if ($_POST['existing_imgperfil']) {
@@ -80,7 +80,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'deletePet') {
    exit();
 
 }
-    
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addConsulta')  {
+    $consulta = new Consulta;
+    $consulta->setNomevet($_POST['nomevet']);
+    $consulta->setDescricao($_POST['descricao']);
+    $consulta->setPet($_POST['pet']);
+    $consulta->setDataconsulta($_POST['dataconsulta']);
+    $consulta->setImg($_POST['img']);
+    array_push($consultas, $consulta);
+    addConsulta($consulta,$pdo);
+    header('Location: home.php?section=consultas&message=Consulta registrada com sucesso');
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updateConsulta') {
+    $consulta = array_find($consultas, fn($c) => $c->idconsulta == $_POST['idconsulta']);
+    $consulta->setNomevet($_POST['nomevet']);
+    $consulta->setDescricao($_POST['descricao']);
+    $consulta->setPet($_POST['pet']);
+    $consulta->setDataconsulta($_POST['dataconsulta']);
+    $consulta->setImg($_POST['img']);
+    updateConsulta($consulta,$pdo);
+    header('Location: home.php?section=consultas&message=Consulta atualizada com sucesso');
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'deleteConsulta') {
+    $consulta = array_find($consultas, fn($c) => $c->idconsulta == $_POST['idconsulta']);
+    deleteConsulta($consulta,$pdo);
+    header('Location: home.php?section=home&message=Consulta excluída com sucesso');
+    exit();
+}
+
 function exportJson($nome,$json) {
     $fp = fopen("export/".$nome.".json","wb");
     fwrite($fp,$json);

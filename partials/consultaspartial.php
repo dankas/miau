@@ -1,47 +1,47 @@
         <h2>Consultas cadastradas: </h2>
         <table border="1" cellpadding="8" cellspacing="0" style="background:#fff; border-collapse:collapse; width:100%;">
-            <thead>
-                <tr>
-                    <th>Pet</th>
-                    <th>Veterinario</th>
-                    <th>Imagem Receita</th>
-                    <th>Data da consulta</th>
-                    <th>Descrição</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- <tr>
-                                                    <form method="POST" action="home.php?action=addpet">
-                                                            <td>
-                                                                    <input type="text" name="nome" id="nome" required >
-                                                            </td>
-                                                            <td>
-                                                                    <select name="tipo" id="tipo" required>
-                                                                            <option value="">Selecione</option>
-                                                                            <option value="Cachorro">Cão</option>
-                                                                            <option value="Gato">Gato</option>
-                                                                            
-                                                                    </select>
-                                                            </td>
-                                                            <td>
-                                                                    <input type="text" name="race" id="race" required>
-                                                            </td>
-                                                            <td> 
-                                                                    <input type="date" name="nascimento" id="nascimento" required>
-                                                            </td>
-                                                            <td>
-                                                                    <input type="text" name="img-perfil" id="img-perfil" value="">
-                                                            </td>
-                                                            <td> 
-                                                                    <textarea name="bio" id="bio" required rows="5" cols="30"></textarea>        </td>
-                                                            <td> 
-                                                                    <button type="submit">Adicionar</button>
-                                                            </td>
-                                                    </form>
-                                            </tr> -->
+                <thead>
+                        <tr>
+                                <th>Pet</th>
+                                <th>Veterinario</th>
+                                <th>Imagem Receita</th>
+                                <th>Data da consulta</th>
+                                <th>Descrição</th>
+                                <th></th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                                <form method="POST" enctype='multipart/form-data' action="home.php?action=addpet">
+                                        <td>
+                                                <select name="pet" id="pet" required>
+                                                        <option value="">Selecione</option>
+                                                        <?php foreach ($pets as $p): ?>
+                                                                <option value="<?php echo $p->idpet; ?>"><?php echo $p->nome; ?></option>
+                                                        <?php endforeach; ?>
+                                                </select>
+                                        </td>
+                                        <td>
+                                                <input type="text" name="nomevet" id="nomevet" required>
+                                        </td>
+                                        <td>
+                                                <img src='assets/imgs/uploads/" . $consulta->img . "' alt='Imagem da Receita' style='width: 50px; height: 50px; object-fit: cover;'>
+                                                <input type='file' name='img' accept='image/*'>
+                                                <input type='hidden' name='existing_img' value='" . $consulta->img . "'>
+                                        </td>
+                                        <td>
+                                                <input type="date" name="dataconsulta" id="dataconsulta" required>
+                                        </td>
+                                        <td>
+                                                <textarea name="descricao" id="descricao" required rows="5" cols="30"></textarea>
+                                        </td>
+                                        <td>
+                                                <button type="submit">Adicionar</button>
+                                        </td>
+                                </form>
+                        </tr>
 
-                <?php var_dump($consultas); ?>
-                <?php listConsultas($consultas); ?>
-            </tbody>
+                        <?php var_dump($consultas); ?>
+                        <?php listConsultas($consultas, $pets); ?>
+                </tbody>
         </table>

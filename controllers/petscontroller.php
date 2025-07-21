@@ -49,19 +49,7 @@ function deletePet($pet,$data) {
 function updatePet($pet,$data) {
     $pet->atualizaDb($data);
 
-    // try {
-        // $data = $data->prepare("UPDATE pet SET nome = :nomepet, race = :racepet, tipoid = :tipopet, tutor = :userid, bio = :biopet, nascimento = :nascimentopet WHERE idpet = :idpet");
-        // $data->bindValue(":nomepet", $pet->nome);
-        // $data->bindValue(":tipopet", $pet->tipo, PDO::PARAM_INT);
-        // $data->bindValue(":racepet", $pet->race);
-        // $data->bindValue(":biopet", $pet->bio);
-        // $data->bindValue(":nascimentopet", $pet->nascimento);
-        // $data->bindValue(":userid", $pet->tutor, PDO::PARAM_INT);
-        // $data->bindValue(":idpet", $pet->idpet, PDO::PARAM_INT);
-        // $data->execute();
-    // } catch (PDOException $e) {
-    //     echo "Erro ao atualizar pet: " . $e->getMessage();
-    // }
+
 
 }
 
