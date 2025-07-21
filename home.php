@@ -101,6 +101,9 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
             case 'consultas':
                 include 'partials/consultaspartial.php';
                 break;
+            case 'fotos':
+                include 'partials/fotospartial.php';
+                break;
             default:
                 include 'partials/petspartial.php';
                 break;

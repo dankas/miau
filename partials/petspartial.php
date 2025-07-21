@@ -16,10 +16,10 @@ function getSortLink($column, $title, $currentSortBy, $currentSortOrder) {
         <table border="1" cellpadding="8" cellspacing="0" style=" background:#fff;; border-collapse:collapse; width:100%;">
             <thead>
                 <tr>
-                    <th><?php echo getSortLink('nome', 'Nome', $sortBy, $sortOrder); ?></th>
+                    <th><?php echo getSortLink('nome', '🔀Nome', $sortBy, $sortOrder); ?></th>
                     <th>Tipo</th>
                     <th>Raça</th>
-                    <th><?php echo getSortLink('nascimento', 'Data nascimento', $sortBy, $sortOrder); ?></th>
+                    <th><?php echo getSortLink('nascimento', '🔀Data nascimento', $sortBy, $sortOrder); ?></th>
                     <th>Imagem de perfil</th>
                     <th>Bio</th>
                     <th></th>

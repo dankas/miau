@@ -118,14 +118,7 @@ class Pet {
         }
         
 
-        // $data->bindValue(":nomepet", $this->nome);
-        // $data->bindValue(":tipopet", $this->tipo, PDO::PARAM_INT);
-        // $data->bindValue(":racepet", $this->race);
-        // $data->bindValue(":biopet", $this->bio);
-        // $data->bindValue(":nascimentopet", $this->nascimento);
-        // $data->bindValue(":userid", $this->tutor, PDO::PARAM_INT);
-        // $data->bindValue(":idpet", $this->idpet, PDO::PARAM_INT);
-        // $data->execute();
+  
     }
 
 }

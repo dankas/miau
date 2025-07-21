@@ -5,9 +5,12 @@ require_once 'core/uploads.php';
 require_once 'models/user.php';
 require_once 'models/pet.php';
 require_once 'models/consulta.php';
+require_once 'models/fotos.php';
+require_once 'userscontroller.php';
 require_once 'petscontroller.php';
 require_once 'userscontroller.php';
 require_once 'consultascontroller.php';
+require_once 'fotoscontroller.php';
 
 // parâmetros de ordenação para os pets
 $allowedSortColumns = ['nome', 'nascimento', 'datetimeregistro'];
@@ -26,6 +29,7 @@ if (!in_array($sortOrder, $allowedSortOrders)) {
 $pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id AND ativo = 1 ORDER BY $sortBy $sortOrder"));
 $user = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
 $consultas = getConsultas( $pdo->prepare("SELECT * FROM consulta JOIN tipo_consulta ON consulta.tipoconsultaid = tipo_consulta.idtipoconsulta WHERE ativo = 1 ORDER BY datetimeregistro"));
+$fotos = getFotos( $pdo->prepare("SELECT * FROM fotos WHERE ativo = 1 ORDER BY datetimeregistro"));
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
@@ -129,6 +133,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'deleteConsulta'
     $consulta = array_find($consultas, fn($c) => $c->idconsulta == $_POST['idconsulta']);
     deleteConsulta($consulta,$pdo);
     header('Location: home.php?section=consultas&message=Consulta excluída com sucesso');
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addFoto') {
+    $nomePet = array_find($pets, fn($p) => $p->idpet == $_POST['pet']);
+    $novaImg = uploadImage($_FILES['foto'],$nomePet->nome);
+    $foto = new Foto;
+    $foto->setidpet($_POST['pet']);
+    $foto->setImg($novaImg);
+    array_push($fotos, $foto);
+    addFotos($foto,$pdo);
+    header('Location: home.php?section=fotos&message=Foto adicionada com sucesso');
     exit();
 }
 
