@@ -41,7 +41,13 @@ function addPet($pet,$data) {
     $pet->atualizaDb($data);
  
 }
-function deletePet($pet,$data) {
+function deletePet($pet,$consultas,$data) {
+    // softdelete das consultas relacionadas ao pet
+    foreach ($consultas as $consulta) {
+        if ($consulta->pet == $pet->idpet) {
+            deleteConsulta($consulta,$data);
+        }
+    }  
     $pet->setAtivo(0);
     $pet->atualizaDb($data);
 

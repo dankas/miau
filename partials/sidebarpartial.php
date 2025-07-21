@@ -1,4 +1,5 @@
     <div class="sidebar">
+        <img src="assets/imgs/logos/logo.jpeg" alt="Logo" style="display: block; margin: 0 auto; max-width: 50%; height: auto; padding-bottom: 20px;">
         <h2>Menu</h2>
         <ul>
             <li><a href="home.php">Home</a></li>

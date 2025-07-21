@@ -12,12 +12,14 @@
                 </thead>
                 <tbody>
                         <tr>
-                                <form method="POST" enctype='multipart/form-data' action="home.php?action=addpet">
+                                <form method="POST" enctype='multipart/form-data' action="home.php?action=addConsulta">
                                         <td>
                                                 <select name="pet" id="pet" required>
                                                         <option value="">Selecione</option>
                                                         <?php foreach ($pets as $p): ?>
+                                                                if ($p->ativo) {
                                                                 <option value="<?php echo $p->idpet; ?>"><?php echo $p->nome; ?></option>
+                                                                }
                                                         <?php endforeach; ?>
                                                 </select>
                                         </td>
@@ -26,8 +28,8 @@
                                         </td>
                                         <td>
                                                 <img src='assets/imgs/uploads/" . $consulta->img . "' alt='Imagem da Receita' style='width: 50px; height: 50px; object-fit: cover;'>
-                                                <input type='file' name='img' accept='image/*'>
-                                                <input type='hidden' name='existing_img' value='" . $consulta->img . "'>
+                                                <input type='file' name='imgconsulta' accept='image/*'>
+                                                <input type='hidden' name='existing_imgconsulta' value='" . $consulta->img . "'>
                                         </td>
                                         <td>
                                                 <input type="date" name="dataconsulta" id="dataconsulta" required>
@@ -40,8 +42,6 @@
                                         </td>
                                 </form>
                         </tr>
-
-                        <?php var_dump($consultas); ?>
                         <?php listConsultas($consultas, $pets); ?>
                 </tbody>
         </table>

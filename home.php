@@ -1,5 +1,7 @@
 <?php 
 require_once 'controllers/homecontroller.php';
+$section = isset($_GET['section']) ? $_GET['section'] : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -54,7 +56,7 @@ require_once 'controllers/homecontroller.php';
     <div class="main-content">
             <?php if (isset($_GET['message'])): ?>
                 <div class="alert" style="background:rgb(56, 179, 107); color: white; padding: 15px; border-radius: 5px;margin-top: 15px;margin-bottom: 15px;">
-                <p style="text-align: right;"> <a href="home.php" style="background: white; padding: 5px ; color: white; text-decoration: none;">❌</a></p>
+                <p style="text-align: right;"> <a href="home.php?section=<?php echo $section; ?>" style="background: white; padding: 5px ; color: white; text-decoration: none;">❌</a></p>
                 <p><strong><?php echo $_GET['message']; ?></strong></p>
                 </div>
             <?php endif; ?>
@@ -70,7 +72,6 @@ require_once 'controllers/homecontroller.php';
             </form>
         </div>
         <?php
-        $section = isset($_GET['section']) ? $_GET['section'] : '';
 
         switch ($section) {
             case 'perfil':

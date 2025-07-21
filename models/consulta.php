@@ -46,7 +46,7 @@ class Consulta {
         try {
             $data = $pdo->prepare("SELECT * FROM consulta");
             $data->execute();
-            $existe = array_find($data->fetchAll(PDO::FETCH_CLASS, 'Consulta'), fn($c) => $c->idconsulta == $_POST['idconsulta']);
+            $existe = array_find($data->fetchAll(PDO::FETCH_CLASS, 'Consulta'), fn($c) => $c->idconsulta == $this->idconsulta);
         } catch   (PDOException $e) {
             error_log("Erro ao atualizar consulta: " . $e->getMessage());
             return false;
