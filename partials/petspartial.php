@@ -1,11 +1,25 @@
+<?php
+// Helper para criar os links de ordenação nas colunas da tabela
+function getSortLink($column, $title, $currentSortBy, $currentSortOrder) {
+    // Se a coluna atual é a de ordenação, inverte a ordem. Senão, o padrão é ASC.
+    $order = ($currentSortBy == $column && $currentSortOrder == 'ASC') ? 'desc' : 'asc';
+    $arrow = '';
+    // Adiciona uma seta para indicar a coluna e a direção da ordenação
+    if ($currentSortBy == $column) {
+        $arrow = $currentSortOrder == 'ASC' ? ' &#9650;' : ' &#9660;'; // Triângulos para cima/baixo
+    }
+    // Monta o link com os parâmetros de ordenação
+    return "<a href=\"home.php?section=pets&sort=$column&order=$order\" style=\"color: inherit; text-decoration: none;\">$title$arrow</a>";
+}
+?>
         <h2>Pets cadastrados: </h2>
         <table border="1" cellpadding="8" cellspacing="0" style=" background:#fff;; border-collapse:collapse; width:100%;">
             <thead>
                 <tr>
-                    <th>Nome</th>
+                    <th><?php echo getSortLink('nome', 'Nome', $sortBy, $sortOrder); ?></th>
                     <th>Tipo</th>
                     <th>Raça</th>
-                    <th>Data nascimento</th>
+                    <th><?php echo getSortLink('nascimento', 'Data nascimento', $sortBy, $sortOrder); ?></th>
                     <th>Imagem de perfil</th>
                     <th>Bio</th>
                     <th></th>

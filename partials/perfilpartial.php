@@ -1,4 +1,4 @@
-        <table border="1" cellpadding="8" cellspacing="0" style="background:#fff; border-collapse:collapse; width:100%;">
+        <table>
             <thead>
                 <tr>
                     <th>Nome</th>

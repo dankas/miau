@@ -9,9 +9,24 @@ require_once 'petscontroller.php';
 require_once 'userscontroller.php';
 require_once 'consultascontroller.php';
 
-$pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id AND ativo = 1 ORDER BY datetimeregistro"));
+// parâmetros de ordenação para os pets
+$allowedSortColumns = ['nome', 'nascimento', 'datetimeregistro'];
+$allowedSortOrders = ['ASC', 'DESC'];
+
+$sortBy = $_GET['sort'] ?? 'datetimeregistro';
+$sortOrder = strtoupper($_GET['order'] ?? 'DESC');
+
+if (!in_array($sortBy, $allowedSortColumns)) {
+    $sortBy = 'datetimeregistro'; // Valor padrão seguro
+}
+if (!in_array($sortOrder, $allowedSortOrders)) {
+    $sortOrder = 'DESC'; // Valor padrão seguro
+}
+
+$pets  = getPets($_SESSION['userId'], $pdo->prepare("SELECT * FROM pet JOIN tipo ON pet.tipoid = tipo.idtipo WHERE tutor = :id AND ativo = 1 ORDER BY $sortBy $sortOrder"));
 $user = getUser($_SESSION['userId'], $pdo->prepare("SELECT * FROM users WHERE iduser = :id"));
 $consultas = getConsultas( $pdo->prepare("SELECT * FROM consulta JOIN tipo_consulta ON consulta.tipoconsultaid = tipo_consulta.idtipoconsulta WHERE ativo = 1 ORDER BY datetimeregistro"));
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  {
     $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';
@@ -47,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
     $pet->setImgperfil($novaImgPerfil);
     array_push($pets, $pet);
     addPet($pet,$pdo);
-    header('Location: home.php?section=home&message=Pet adicionado com sucesso');
+    header("Location: home.php?section=pets&message=Pet adicionado com sucesso&sort=$sort_by&order=$sort_order");
     exit();
 
 }
@@ -67,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
     updatePet($pet,$pdo);
-    header('Location: home.php?section=home&message=Pet atualizado com sucesso '.$novaImgPerfil. ' ');
+    header("Location: home.php?section=pets&message=Pet atualizado com sucesso&sort=$sort_by&order=$sort_order");
     exit();
 
 }
@@ -75,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'deletePet') {
    $pet = array_find($pets, fn($p) => $p->idpet == $_POST['idpet']);
    deletePet($pet,$consultas,$pdo);
-   header('Location: home.php');
+   header("Location: home.php?section=pets&message=Pet excluído com sucesso&sort=$sort_by&order=$sort_order");
    exit();
 
 }

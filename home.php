@@ -49,6 +49,27 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
             margin-left: 220px;
             padding: 40px;
         }
+        .main-content table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-content th, .main-content td {
+            border: 1px solid #ddd;
+            padding: 12px; /* Controla o espaçamento interno das células */
+            text-align: left;
+            vertical-align: middle;
+        }
+        .main-content th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+        .main-content td input[type="text"], .main-content td input[type="date"], .main-content td select, .main-content td textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
