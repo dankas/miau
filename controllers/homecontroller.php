@@ -36,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'exportJson' )  
     $commitMessage = 'commit ' . date('Y-m-d H:i:s').'';
     exportJson("pets", json_encode($pets));
     exportJson("user", json_encode($user));
+    exportJson("consultas", json_encode($consultas));
+    exportJson("fotos", json_encode($fotos));
     //$gitaddMessage = system(('git add .'));
     //$gitcommitMessage = system('git commit -m "' . $commitMessage . '"'); // This line was commented out
     //$gitpushMessage = system('git push origin master '); // This line was commented out
@@ -143,8 +145,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addFoto') {
     $foto->setidpet($_POST['pet']);
     $foto->setImg($novaImg);
     array_push($fotos, $foto);
-    addFotos($foto,$pdo);
+    addFoto($foto,$pdo);
     header('Location: home.php?section=fotos&message=Foto adicionada com sucesso');
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'deleteFoto') {
+    $foto = array_find($fotos, fn($f) => $f->idfoto == $_POST['idfoto']);
+    deleteFoto($foto,$pdo);
+    header('Location: home.php?section=fotos&message=Foto excluída com sucesso');
     exit();
 }
 

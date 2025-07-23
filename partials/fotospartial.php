@@ -22,9 +22,7 @@
                                                 </select>
                                         </td>
                                         <td>
-                                                <img src='assets/imgs/uploads/" . $consulta->img . "' alt='Imagem da Receita' style='width: 50px; height: 50px; object-fit: cover;'>
                                                 <input type='file' name='foto' accept='image/*'>
-                                                <input type='hidden' name='existing_foto' value='" . $consulta->img . "'>
                                         </td>
                                         <td>
                                                 <input type="date" name="data" id="data" required>

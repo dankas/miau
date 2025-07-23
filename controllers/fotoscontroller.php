@@ -8,9 +8,10 @@ function listFotos($fotos,$pets) {
         echo "<td><input type='text' name='datetimeregistro' value='" . $foto->datetimeregistro . "'></td>";
         echo "<td>
 
-              <form method='POST' action='home.php?action=deleteFoto' style='display:inline;'>
+              
+            <form method='POST' action='home.php?action=deleteFoto' style='display:inline;'>
             <input type='hidden' name='idfoto' value='" . $foto->idfoto . "'>
-            <button type='submit'>Excluir</button>
+            <button type='submit'>Excluir</button> 
               </form>
               </td>";
         echo "</tr>";
@@ -26,20 +27,17 @@ function getFotos($data) {
     }
 }
 
-function addFotos($foto,$data) {
+function addFoto($foto,$data) {
     $foto->setAtivo(1);
     $foto->atualizaDb($data);
 
 }
 
-// function updateConsulta($consulta, $data) {
-//     $consulta->atualizaDb($data);
-// }
 
-// function deleteConsulta($consulta, $data) {
-//     $consulta->setAtivo(0);
-//     $consulta->atualizaDb($data);
-// }
+function deleteFoto($foto, $data) {
+    $foto->setAtivo(0);
+    $foto->atualizaDb($data);
+}
 
 
 ?>
