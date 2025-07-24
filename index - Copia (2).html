@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiAu</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            /* 1. Layout principal com CSS Grid */
+            display: grid;
+            grid-template-areas:
+                "header"
+                "main";
+            grid-template-columns: 1fr; /* Uma coluna por padrão (mobile) */
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            grid-area: header;
+        }
+        main {
+            grid-area: main;
+        }
+
+        .pet-menu {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            overflow-x: auto; /* Mantém a rolagem horizontal em telas pequenas */
+        }
+        .pet-menu li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pet-menu li a {
+            display: block;
+            padding: 10px 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: black;
+            border-radius: 5px;
+            white-space: nowrap; /* Prevent text wrapping in menu items */
+        }
+        .pet-menu li a:hover {
+            background-color: #f0f0f0;
+            border-color: #ccc;
+        }
+        .pet-details {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .pet-details h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .pet-details h3 {
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .pet-details ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        .pet-details img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .pet-details .profile-img {
+            /* 2. Imagem de perfil responsiva */
+            max-width: 150px;
+            display: block;
+            margin: 0 auto 15px auto; /* Centralizada em mobile */
+            float: none;
+        }
+        .no-content {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+        .consultation-img {
+            max-width: 100px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .other-photos {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .other-photos img {
+            max-height: 100px;
+            border-radius: 5px;
+        }
+        .pet-thumbnail {
+            object-fit: cover;
+            border-radius: 50%;
+            width: 100px; 
+            height: 100px;
+            border: 2px solid #eee;
+        }
+
+        /* 3. Media Query para telas maiores (tablets e desktops) */
+        @media (min-width: 768px) {
+            .container {
+                /* Layout de 2 colunas: sidebar + conteúdo */
+                grid-template-areas: "header main";
+                grid-template-columns: 250px 1fr; /* Largura da sidebar e o resto */
+            }
+
+            .pet-menu {
+                flex-direction: column; /* Menu vira uma lista vertical */
+                overflow-x: visible;
+                border-bottom: none;
+                padding-bottom: 0;
+                border-right: 1px solid #eee;
+                height: 100%;
+            }
+
+            .pet-details .profile-img {
+                float: right; /* Flutua à direita em telas maiores */
+                margin: 0 0 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+        <ul class="pet-menu" id="petMenu">
+        </ul>
+        </header>
+        <main>
+        <div class="pet-details no-content" id="petContent">
+            Selecione um pet do menu para ver os detalhes.
+        </div>
+        </main>
+    </div>
+
+    <script>
+        async function init() {
+            const petMenuElement = document.getElementById('petMenu');
+            const petContentElement = document.getElementById('petContent'); // Este elemento agora é único e correto.
+
+            try {
+                //Elemento para exibir notificações de pets perdidos
+                //https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Using_dynamic_styling_information
+                const lostPetNotification = document.createElement('div');
+                lostPetNotification.id = 'lostPetNotification';
+                lostPetNotification.style.cssText = 'background-color: #ffdddd; border-left: 6px solid #f44336; margin-bottom: 15px; padding: 10px; display: none;';
+                document.querySelector('.container').prepend(lostPetNotification);
+                // 1. Carrega todos os JSONs em paralelo para melhor performance.
+                const [users, pets, consultas, fotos] = await Promise.all([
+                    fetch('export/user.json').then(res => res.json()),
+                    fetch('export/pets.json').then(res => res.json()),
+                    fetch('export/consultas.json').then(res => res.json()),
+                    fetch('export/fotos.json').then(res => res.json())
+                ]);
+
+                // 2. Separa a lógica de configuração da UI em outra função.
+                setupApp(users, pets, consultas, fotos, petMenuElement, petContentElement, lostPetNotification);
+
+            } catch (error) {
+                // 3. Adiciona tratamento de erro para falhas no carregamento.
+                console.error("Falha ao carregar os dados:", error);
+                petContentElement.innerHTML = '<p class="no-content">Ocorreu um erro ao carregar as informações. Por favor, tente novamente mais tarde.</p>';
+            }
+        }
+
+        function setupApp(users, pets, consultas, fotos, petMenuElement, petContentElement, lostPetNotificationElement) {
+            
+
+            // 1. Cria um Map de pets, onde a chave é o idpet.
+            //https://www.freecodecamp.org/portuguese/news/como-simplificar-sua-base-de-codigo-com-map-reduce-e-filter-em-javascript/
+            //https://medium.com/@llreinert/desempenho-de-list-find-vs-map-em-javascript-uma-an%C3%A1lise-profunda-fe209b7120b2
+            const petsMap = new Map(pets.map(pet => [pet.idpet, pet]));
+
+            // 2. Agrupa consultas por pet. O resultado é um Map onde:
+            //    - a chave é o id do pet
+            //    - o valor é um array de suas consultas
+            const consultasByPetMap = new Map();
+            for (const consulta of consultas) {
+                if (!consultasByPetMap.has(consulta.pet)) {
+                    consultasByPetMap.set(consulta.pet, []);
+                }
+                consultasByPetMap.get(consulta.pet).push(consulta);
+            }
+
+            // 3. Agrupa fotos por pet, da mesma forma que as consultas.
+            const fotosByPetMap = new Map();
+            for (const foto of fotos) {
+                if (!fotosByPetMap.has(foto.idpet)) {
+                    fotosByPetMap.set(foto.idpet, []);
+                }
+                fotosByPetMap.get(foto.idpet).push(foto);
+            }
+
+            // Verifica se há pets perdidos e exibe a notificação
+            const lostPets = pets.filter(pet => pet.perdido === true);
+            if (lostPets.length > 0) {
+                const lostPetNames = lostPets.map(pet => pet.nome).join(', ');
+                lostPetNotificationElement.innerHTML = `<strong>Atenção:</strong> Os seguintes pets estão marcados como perdidos: ${lostPetNames}.`;
+                // Notificação HTML5 Notification API
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('Pets Perdidos', {
+                        body: `Atenção: Os seguintes pets estão marcados como perdidos: ${lostPetNames}.`,
+                        icon: 'assets/imgs/warning.png' // Adicione um ícone relevante
+                    });
+                } else if ('Notification' in window && Notification.permission !== 'denied') {
+                    Notification.requestPermission().then(permission => {
+                        // Se o usuário conceder permissão, tente novamente
+                    });
+                }
+                lostPetNotificationElement.style.display = 'block';
+            } else {
+                lostPetNotificationElement.style.display = 'none';
+            }
+
+
+
+            function displayPetDetails(petId) {
+                const pet = petsMap.get(parseInt(petId)); 
+                if (pet) {
+                    // Lógica para encontrar o tutor, seja `users` um array ou um objeto único.
+                    let owner = null;
+                    if (Array.isArray(users)) {
+                        owner = users.find(user => user.iduser === pet.tutor);
+                    } else if (users && users.iduser === pet.tutor) {
+                        owner = users;
+                    }
+                    const petConsultas = consultasByPetMap.get(pet.idpet) || []; // Busca O(1)
+                    const petFotos = fotosByPetMap.get(pet.idpet) || []; // Busca O(1)
+                    const profileImage = pet.imgperfil ? `<img src="${'assets/imgs/uploads/' + pet.imgperfil}" alt="${pet.nome}" class="profile-img">` : '';
+
+                    let detailsHTML = `<h2>${pet.nome}</h2>${profileImage}`;
+                    // 4. Usa template literals para melhorar a legibilidade.
+                    detailsHTML += pet.tipo ? `<p><strong>Tipo:</strong> ${pet.tipo}</p>` : '';
+                    detailsHTML += pet.race ? `<p><strong>Raça:</strong> ${pet.race}</p>` : '';
+                    detailsHTML += pet.nascimento ? `<p><strong>Nascimento:</strong> ${new Date(pet.nascimento).toLocaleDateString()}</p>` : '';
+                    detailsHTML += pet.bio ? `<p><strong>Bio:</strong> ${pet.bio}</p>` : '';
+
+                    if (owner) {
+                        detailsHTML += `
+                            <h3>Tutor</h3>
+                            <p><strong>Nome:</strong> ${owner.username}</p>
+                            ${owner.telefone ? `<p><strong>Telefone:</strong> ${owner.telefone}</p>` : ''}
+                        `;
+                    }
+
+                    if (petConsultas.length > 0) {
+                        const consultasList = petConsultas.map(consulta => `
+                            <li>
+                                <strong>Data:</strong> ${new Date(consulta.dataconsulta).toLocaleDateString()},
+                                <strong>Veterinário:</strong> ${consulta.nomevet},
+                                <strong>Tipo:</strong> ${consulta.nome},
+                                <strong>Descrição:</strong> ${consulta.descricao}
+                                ${consulta.img ? `<br><img src="${'assets/imgs/uploads/' + consulta.img}" alt="Imagem da Consulta" class="consultation-img">` : ''}
+                            </li>
+                        `).join('');
+                        detailsHTML += `<h3>Consultas</h3><ul>${consultasList}</ul>`;
+                    } else {
+                        detailsHTML += `<p>Nenhuma consulta registrada para ${pet.nome}.</p>`;
+                    }
+
+                    const otherPetPhotos = petFotos.filter(foto => foto.img !== pet.imgperfil);
+                    if (otherPetPhotos.length > 0) {
+                        const photosHtml = otherPetPhotos.map(foto =>
+                            `<img src="${'assets/imgs/uploads/' + foto.img}" alt="Foto de ${pet.nome}">`
+                        ).join('');
+                        detailsHTML += `
+                            <h3>Outras Fotos</h3>
+                            <div class="other-photos">${photosHtml}</div>
+                        `;
+                    }
+
+                    petContentElement.innerHTML = detailsHTML;
+                    petContentElement.classList.remove('no-content');
+                } else {
+                    petContentElement.innerHTML = `<p>Detalhes do pet com ID "${petId}" não encontrados.</p>`;
+                    petContentElement.classList.remove('no-content');
+                }
+            }
+
+            // 5. Gera o menu de pets de forma mais concisa.
+            petMenuElement.innerHTML = Array.from(petsMap.values()).map(pet => `
+                <li><img class="pet-thumbnail" src="${'assets/imgs/uploads/' + pet.imgperfil}" alt="Foto de ${pet.nome}"><a href="#${pet.idpet}">${pet.nome}</a></li>
+            `).join('');
+
+            function handleRouteChange() {
+                const petId = window.location.hash.substring(1);
+                if (petId) {
+                    displayPetDetails(petId);
+                } else {
+                    // Mostra a mensagem inicial se nenhum pet for selecionado.
+                    petContentElement.innerHTML = 'Selecione um pet do menu para ver os detalhes.';
+                    petContentElement.classList.add('no-content');
+                }
+            }
+
+            window.addEventListener('hashchange', handleRouteChange);
+
+            // Verifica se já existe um hash na URL ao carregar a página.
+            if (window.location.hash) {
+                handleRouteChange();
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

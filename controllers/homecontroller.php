@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'addpet') {
     $pet->setNascimento($_POST['nascimento']);
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
     $pet->setTutor( $_SESSION['userId']);
+    $pet->setPerdido($_POST['perdido']);
     $novaImgPerfil = uploadImage($_FILES['img_upload'], NULL);
     $pet->setImgperfil($novaImgPerfil);
     array_push($pets, $pet);
@@ -86,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] == 'updatePet') {
     $pet->setBio($_POST['bio']);
     $pet->setNascimento($_POST['nascimento']);
     $pet->setTipo(($_POST['tipo'] === 'Gato' ) ? 1 : 2 );
+    $pet->setPerdido($_POST['perdido']);
     $pet->setTutor( $_SESSION['userId']);
     updatePet($pet,$pdo);
     header("Location: home.php?section=pets&message=Pet atualizado com sucesso&sort=$sort_by&order=$sort_order");

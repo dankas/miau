@@ -22,6 +22,7 @@ function getSortLink($column, $title, $currentSortBy, $currentSortOrder) {
                     <th><?php echo getSortLink('nascimento', '🔀Data nascimento', $sortBy, $sortOrder); ?></th>
                     <th>Imagem de perfil</th>
                     <th>Bio</th>
+                    <th>Perdido</th>
                     <th></th>
                 </tr>
             </thead>
@@ -50,6 +51,14 @@ function getSortLink($column, $title, $currentSortBy, $currentSortOrder) {
                          </td>
                         <td> 
                             <textarea name="bio" id="bio" required rows="5" cols="30"></textarea>        </td>
+
+                        <td> 
+                            <select name="perdido" id="perdido" required>
+                                <option value="">Selecione</option>
+                                <option value=1>Sim</option>
+                                <option value=0>Não</option>
+                            </select>
+                        </td>
                         <td> 
                             <button type="submit">Adicionar</button>
                         </td>

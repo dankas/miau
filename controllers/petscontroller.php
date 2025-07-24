@@ -17,6 +17,12 @@ function listPets($pets) {
             <input type='hidden' name='existing_imgperfil' value='" . $pet->imgperfil . "'></td>";
         echo "<td><textarea rows='5' cols='30' name='bio'>" . $pet->bio . "</textarea></td>";
         echo "<td>
+            <select name='perdido' id='perdido' required>
+                <option value='1' " . ($pet->perdido == 1 ? "selected" : "") . ">Sim</option>
+                <option value='0' " . ($pet->perdido == 0 ? "selected" : "") . ">Não</option>
+            </select>
+        </td>";
+        echo "<td>
             <button type='submit'>Salvar</button>
               </form>
               <form method='POST' action='home.php?action=deletePet' style='display:inline;'>

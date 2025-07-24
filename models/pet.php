@@ -12,6 +12,7 @@ class Pet {
     public $nascimento;
     public private(set) int $ativo;
     public $datetimeregistro;
+    public $perdido;
 
     public function __construct()        {
 
@@ -51,6 +52,10 @@ class Pet {
     public function setImgperfil($imgperfil) {
         $this->imgperfil = $imgperfil;
     }
+    public function setPerdido($perdido) {
+        $this->perdido = $perdido;
+    }
+
 
     public function atualizaDb($pdo) {
         $existe = null;
@@ -67,7 +72,7 @@ class Pet {
             case !isset($existe):
                 // Inserir novo pet
                 try {
-                    $data = $pdo->prepare("INSERT INTO pet (nome,race,tipoid,tutor,bio,nascimento,ativo,datetimeregistro,imgperfil) VALUES (:nomepet,:racepet, :tipopet, :userid, :biopet, :nascimentopet, :ativo, NOW(), :imgperfil)");
+                    $data = $pdo->prepare("INSERT INTO pet (nome,race,tipoid,tutor,bio,nascimento,ativo,datetimeregistro,imgperfil,perdido) VALUES (:nomepet,:racepet, :tipopet, :userid, :biopet, :nascimentopet, :ativo, NOW(), :imgperfil, :perdido)");
                     $data->bindValue(":nomepet", $this->nome);
                     $data->bindValue(":tipopet", $this->tipo, PDO::PARAM_INT);
                     $data->bindValue(":racepet", $this->race);
@@ -75,6 +80,7 @@ class Pet {
                     $data->bindValue(":nascimentopet", $this->nascimento);
                     $data->bindValue(":userid", $this->tutor, PDO::PARAM_INT);
                     $data->bindValue(":ativo", $this->ativo, PDO::PARAM_INT);
+                    $data->bindValue(":perdido", $this->perdido, PDO::PARAM_INT);
                     $data->bindValue(":imgperfil", $this->imgperfil);
                     $data->execute();
                     $this->idpet = $pdo->lastInsertId();
@@ -86,7 +92,7 @@ class Pet {
             case (isset($existe) && $this->ativo):
                 // Atualizar pet existente
                 try {
-                    $data = $pdo->prepare("UPDATE pet SET nome = :nomepet, race = :racepet, tipoid = :tipopet, tutor = :userid, bio = :biopet, nascimento = :nascimentopet, imgperfil = :imgperfil WHERE idpet = :idpet");
+                    $data = $pdo->prepare("UPDATE pet SET nome = :nomepet, race = :racepet, tipoid = :tipopet, tutor = :userid, bio = :biopet, nascimento = :nascimentopet, imgperfil = :imgperfil, perdido = :perdido WHERE idpet = :idpet");
                     $data->bindValue(":nomepet", $this->nome);
                     $data->bindValue(":tipopet", $this->tipo, PDO::PARAM_INT);
                     $data->bindValue(":racepet", $this->race);
@@ -95,6 +101,7 @@ class Pet {
                     $data->bindValue(":userid", $this->tutor, PDO::PARAM_INT);
                     $data->bindValue(":imgperfil", $this->imgperfil);
                     $data->bindValue(":idpet", $this->idpet, PDO::PARAM_INT);
+                    $data->bindValue(":perdido", $this->perdido, PDO::PARAM_INT);
 
                     $data->execute();
                                 
